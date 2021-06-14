@@ -1,3 +1,4 @@
+
 import java.util.*;
 
 public class Principal {
@@ -9,7 +10,7 @@ public class Principal {
         int opcion = 0;
         do {
             mostrarMenu();
-            opcion = Integer.parseInt(scan.nextLine());
+            opcion = Integer.parseInt(scan.nextLine().trim());
             if (opcion == 1) {
                 prestarPelicula();
             } else if (opcion == 2) {
@@ -38,10 +39,9 @@ public class Principal {
     int posicionC;
     int posicionP;
     int controlPelicula = 0;
-    int controlCLientes = 0;
     int[] idPelicula = new int[limite];
     String[] nombrePelicula = new String[limite];
-    int[] añoPelicula = new int[limite];
+    int[] anioPelicula = new int[limite];
     String[] categoriaPelicula = new String[limite];
     boolean[] disponible = new boolean[limite];
     int controlCLiente = 0;
@@ -71,24 +71,28 @@ public class Principal {
     public void agregarCliente() {
         int idC;
         System.out.println("");
-        if (controlCLientes == 0) {
+        if (controlCLiente == 0) {
             System.out.println("Ingresa el Id de el cliente");
-            idC = Integer.parseInt(scan.nextLine());
-            idCliente[controlCLientes] = idC;
+            idC = Integer.parseInt(scan.nextLine().trim());
+            idCliente[controlCLiente] = idC;
             pedirDatosCliente();
-        } else if (controlCLientes == limite) {
+        } else if (controlCLiente == limite) {
             System.out.println("Ya no puede ingresar mas clientes");
         } else {
-            for (int i = 0; i < controlCLientes; i++) {
-                System.out.println("Ingresa el Id de el cliente");
-                idC = Integer.parseInt(scan.nextLine());
+            boolean esta = false;
+            System.out.println("Ingresa el Id de el cliente");
+            idC = Integer.parseInt(scan.nextLine().trim());
+            for (int i = 0; i < controlCLiente; i++) {
                 if (idC == idCliente[i]) {
-                    System.out.println("\nYa existe un cliente con ese Id\n");
-                } else {
-                    idCliente[controlCLientes] = idC;
-                    pedirDatosCliente();
+                    esta = true;
                     break;
                 }
+            }
+            if (esta) {
+                System.out.println("\nYa existe un cliente con ese Id\n");
+            } else {
+                idCliente[controlCLiente] = idC;
+                pedirDatosCliente();
             }
         }
     }
@@ -98,18 +102,18 @@ public class Principal {
         int telefonoC;
         System.out.println("Ingresa el nombre del Cliente");
         nombreC = scan.nextLine();
-        nombreCliente[controlCLientes] = nombreC;
+        nombreCliente[controlCLiente] = nombreC;
         System.out.println("Ingresa el numero de telefono");
-        telefonoC = Integer.parseInt(scan.nextLine());
-        telefonoCliente[controlCLientes] = telefonoC;
-        peliculaPrestada[controlCLientes] = false;
+        telefonoC = Integer.parseInt(scan.nextLine().replaceAll(" ", ""));
+        telefonoCliente[controlCLiente] = telefonoC;
+        peliculaPrestada[controlCLiente] = false;
         System.out.println("\nCliente Agregado\n");
-        controlCLientes++;
+        controlCLiente++;
     }
 
     public void mostrarClientes() {
         System.out.println("\nSe han ingresado los siguientes Clientes");
-        for (int i = 0; i < controlCLientes; i++) {
+        for (int i = 0; i < controlCLiente; i++) {
             System.out.print(idCliente[i] + "     ");
             System.out.print(nombreCliente[i] + "     ");
             System.out.print(telefonoCliente[i] + "     ");
@@ -126,37 +130,41 @@ public class Principal {
         System.out.println("");
         if (controlPelicula == 0) {
             System.out.println("Ingresa el Id de la pelicula");
-            idP = Integer.parseInt(scan.nextLine());
+            idP = Integer.parseInt(scan.nextLine().trim());
             idPelicula[controlPelicula] = idP;
             pedirDatosPelicula();
         } else if (controlPelicula == limite) {
             System.out.println("No se puede agregar mas pelicular");
         } else {
+            System.out.println("Ingresa el Id de la pelicula");
+            idP = Integer.parseInt(scan.nextLine().trim());
+            boolean esta = false;
             for (int i = 0; i < controlPelicula; i++) {
-                System.out.println("Ingresa el Id de la pelicula");
-                idP = Integer.parseInt(scan.nextLine());
                 if (idP == idPelicula[i]) {
-                    System.out.println("\nYa existe una pelicula con ese Id\n");
-                } else {
-                    idPelicula[controlPelicula] = idP;
-                    pedirDatosPelicula();
+                    esta = true;
                     break;
                 }
+            }
+            if (esta) {
+                System.out.println("\nYa existe una pelicula con ese Id\n");
+            } else {
+                idPelicula[controlPelicula] = idP;
+                pedirDatosPelicula();
             }
         }
     }
 
     public void pedirDatosPelicula() {
         String nombreP;
-        int añoP;
+        int anioP;
         String categoriaP;
 
         System.out.println("Ingresa el nombre de la pelicula");
         nombreP = scan.nextLine();
         nombrePelicula[controlPelicula] = nombreP;
         System.out.println("Ingresa el año en el que fue estrenada");
-        añoP = Integer.parseInt(scan.nextLine());
-        añoPelicula[controlPelicula] = añoP;
+        anioP = Integer.parseInt(scan.nextLine().trim());
+        anioPelicula[controlPelicula] = anioP;
         System.out.println("Ingresa la categoria de la pelicula");
         categoriaP = scan.nextLine();
         categoriaPelicula[controlPelicula] = categoriaP;
@@ -170,7 +178,7 @@ public class Principal {
         for (int i = 0; i < controlPelicula; i++) {
             System.out.print(idPelicula[i] + "     ");
             System.out.print(nombrePelicula[i] + "     ");
-            System.out.print(añoPelicula[i] + "     ");
+            System.out.print(anioPelicula[i] + "     ");
             System.out.print(categoriaPelicula[i] + "     ");
             if (disponible[i]) {
                 System.out.print("Disponible\n");
@@ -183,13 +191,19 @@ public class Principal {
     public int buscarIdClienteP() {
         int posicion = 30;
         System.out.println("Ingrese el id del Cliente que va a prestar o que va a devolver");
-        int id = Integer.parseInt(scan.nextLine());
-        for (int i = 0; i < controlCLiente; i++) {
+        int id = Integer.parseInt(scan.nextLine().trim());
+        boolean esta = true;
+        int i;
+        for ( i = 0; i < controlCLiente; i++) {
             if (id == idCliente[i]) {
-                return i;
-            } else {
-                System.out.println("No se encontro el Cliente");
+                esta = false;
+                break;
             }
+        }
+        if (esta == false) {
+            return i;
+        } else {
+            System.out.println("No se encontro el Cliente");
         }
         return posicion;
     }
@@ -197,13 +211,19 @@ public class Principal {
     public int buscarIdPeliculaP() {
         int posicion = 30;
         System.out.println("Ingrese el id de la Pelicula a prestar o a devolver");
-        int id = Integer.parseInt(scan.nextLine());
-        for (int i = 0; i < controlPelicula; i++) {
-            if (id == idClientesP[i]) {
-                return i;
-            } else {
-                System.out.println("No se encontro la Pelicula");
+        int id = Integer.parseInt(scan.nextLine().trim());
+        boolean esta = true;
+        int i;
+        for (i = 0; i < controlPelicula; i++) {
+            if (id == idPelicula[i]) {
+                esta = false;
+                break;
             }
+        }
+        if (esta == false) {
+            return i;
+        } else {
+            System.out.println("No se encontro la Pelicula");
         }
         return posicion;
     }
@@ -230,7 +250,7 @@ public class Principal {
         System.out.println("\nLas peliculas disponibles son:\n");
         for (int i = 0; i < controlPelicula; i++) {
             if (disponible[i]) {
-                System.out.println(idPelicula[i] + "     " + nombrePelicula[i] + "     " + añoPelicula[i] + "     "
+                System.out.println(idPelicula[i] + "     " + nombrePelicula[i] + "     " + anioPelicula[i] + "     "
                         + categoriaPelicula[i]);
             }
         }
@@ -274,9 +294,9 @@ public class Principal {
             if (peliculaPrestada[posicionC] & !disponible[posicionP]) {
                 System.out.println("Listo Pelicula devuelta, cliente libre para realizar otro prestamo");
                 for (int i = 0; i < controlprestamo; i++) {
-                    diasPrestados[i] = diasPrestados[i+1];
-                    idClientesP[i] = idClientesP[i+1];
-                    idPelicualasP[i] = idPelicualasP[i+1];
+                    diasPrestados[i] = diasPrestados[i + 1];
+                    idClientesP[i] = idClientesP[i + 1];
+                    idPelicualasP[i] = idPelicualasP[i + 1];
                 }
                 peliculaPrestada[posicionC] = false;
                 disponible[posicionP] = true;
@@ -285,26 +305,26 @@ public class Principal {
         }
     }
 
-    public void ordenarPeliculas(){
+    public void ordenarPeliculas() {
         for (int i = 1; i < controlPelicula; i++) {
-            for (int j = 0; j < controlPelicula -j; j++) {
+            for (int j = 0; j < controlPelicula - i; j++) {
                 String nombre = nombrePelicula[j];
-                String nombreSiguiente = nombrePelicula[j+1];
+                String nombreSiguiente = nombrePelicula[j + 1];
                 if (nombre.compareToIgnoreCase(nombreSiguiente) > 0) {
                     nombrePelicula[j] = nombreSiguiente;
-                    nombrePelicula[j+1] = nombre;
+                    nombrePelicula[j + 1] = nombre;
                     String aux = categoriaPelicula[j];
-                    categoriaPelicula[j] = categoriaPelicula[j+1];
-                    categoriaPelicula[j+1] = aux;
+                    categoriaPelicula[j] = categoriaPelicula[j + 1];
+                    categoriaPelicula[j + 1] = aux;
                     int aux1 = idPelicula[j];
-                    idPelicula[j] = idPelicula[j+1];
-                    idPelicula[j+1] = aux1; 
-                    aux1 = añoPelicula[j];
-                    añoPelicula[j] = añoPelicula[j+1];
-                    añoPelicula[j+1] = aux1;
+                    idPelicula[j] = idPelicula[j + 1];
+                    idPelicula[j + 1] = aux1;
+                    aux1 = anioPelicula[j];
+                    anioPelicula[j] = anioPelicula[j + 1];
+                    anioPelicula[j + 1] = aux1;
                     boolean aux2 = disponible[j];
-                    disponible[j] = disponible[j+1];
-                    disponible[j+1] = aux2; 
+                    disponible[j] = disponible[j + 1];
+                    disponible[j + 1] = aux2;
 
                 }
             }
