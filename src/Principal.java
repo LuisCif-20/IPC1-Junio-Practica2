@@ -359,7 +359,7 @@ public class Principal {
     }
     public void mostrarCantidadPrestadas(){
         for (int i = 0; i < controlPelicula; i++) {
-           System.out.println(idPelicualasP + "     " + nombrePelicula[i] + "     " + anioPelicula[i] + "     " + categoriaPelicula[i] + "     Ha sido prestada: " + vecesPrestada[i] + " veces"); 
+           System.out.println(idPelicualasP[i] + "     " + nombrePelicula[i] + "     " + anioPelicula[i] + "     " + categoriaPelicula[i] + "     Ha sido prestada: " + vecesPrestada[i] + " veces"); 
         }
     }
 
