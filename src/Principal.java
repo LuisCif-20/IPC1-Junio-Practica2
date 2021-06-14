@@ -26,7 +26,7 @@ public class Principal {
             } else if (opcion == 7) {
                 mostrarClientes();
             } else if (opcion == 8) {
-
+                menuReportes();
             } else {
                 System.out.println("----------Hasta Pronto----------");
             }
@@ -44,6 +44,7 @@ public class Principal {
     int[] anioPelicula = new int[limite];
     String[] categoriaPelicula = new String[limite];
     boolean[] disponible = new boolean[limite];
+    int[] vecesPrestada = new int[limite];
     int controlCLiente = 0;
     String[] nombreCliente = new String[limite];
     int[] idCliente = new int[limite];
@@ -168,6 +169,7 @@ public class Principal {
         System.out.println("Ingresa la categoria de la pelicula");
         categoriaP = scan.nextLine();
         categoriaPelicula[controlPelicula] = categoriaP;
+        vecesPrestada[controlPelicula] = 0;
         disponible[controlPelicula] = true;
         System.out.println("\nPelicula Agregada\n");
         controlPelicula++;
@@ -271,6 +273,7 @@ public class Principal {
                 idPelicualasP[controlprestamo] = idPelicula[posicionP];
                 peliculaPrestada[posicionC] = true;
                 disponible[posicionP] = false;
+                vecesPrestada[posicionP]++;
                 controlprestamo++;
             }
         }
@@ -322,6 +325,9 @@ public class Principal {
                     aux1 = anioPelicula[j];
                     anioPelicula[j] = anioPelicula[j + 1];
                     anioPelicula[j + 1] = aux1;
+                    aux1 = vecesPrestada[j];
+                    vecesPrestada[j] = vecesPrestada[j+1];
+                    vecesPrestada[j+1] = aux1;
                     boolean aux2 = disponible[j];
                     disponible[j] = disponible[j + 1];
                     disponible[j + 1] = aux2;
@@ -331,5 +337,142 @@ public class Principal {
         }
 
     }
+    public void buscarMasPrestada(){
+        int posicionmayor = 0;
+        for (int i = 0; i < controlPelicula; i++) {
+            if (vecesPrestada[i] < vecesPrestada[i+1]) {
+                posicionmayor = i+1;
+            }
+        }
+        System.out.println("La pelicula mas prestada fue " + nombrePelicula[posicionmayor]);
+    }
+    public void buscarMenosPrestada(){
+        int menor = vecesPrestada[0];
+        int posicionmenor = 0;
+        for (int i = 0; i < controlPelicula; i++) {
+            if (menor > vecesPrestada[i]) {
+                menor = vecesPrestada[i];
+                posicionmenor = i;
+            }
+        }
+        System.out.println("La pelicula menos prestada fue " + nombrePelicula[posicionmenor]);
+    }
+    public void mostrarCantidadPrestadas(){
+        for (int i = 0; i < controlPelicula; i++) {
+           System.out.println(idPelicualasP + "     " + nombrePelicula[i] + "     " + anioPelicula[i] + "     " + categoriaPelicula[i] + "     Ha sido prestada: " + vecesPrestada[i] + " veces"); 
+        }
+    }
+
+    public void mostrarRomanticas(){
+        System.out.println("Peliculas Romanticas");
+        for (int i = 0; i < controlPelicula; i++) {
+            if (categoriaPelicula[i].equalsIgnoreCase("Romantica")) {
+                System.out.println(idPelicula[i] + "     " + nombrePelicula[i] + "     " + anioPelicula[i]);
+            }
+        }
+    }
+    public void mostrarComedio(){
+        System.out.println("Peliculas de Comedia");
+        for (int i = 0; i < controlPelicula; i++) {
+            if (categoriaPelicula[i].equalsIgnoreCase("Comedia")) {
+                System.out.println(idPelicula[i] + "     " + nombrePelicula[i] + "     " + anioPelicula[i]);
+            }
+        }
+    }
+    public void mostrarAccion(){
+        System.out.println("Peliculas de Accion");
+        for (int i = 0; i < controlPelicula; i++) {
+            if (categoriaPelicula[i].equalsIgnoreCase("Accion")) {
+                System.out.println(idPelicula[i] + "     " + nombrePelicula[i] + "     " + anioPelicula[i]);
+            }
+        }
+    }
+    public void mostrarDocumentales(){
+        System.out.println("Documentales");
+        for (int i = 0; i < controlPelicula; i++) {
+            if (categoriaPelicula[i].equalsIgnoreCase("Documental")) {
+                System.out.println(idPelicula[i] + "     " + nombrePelicula[i] + "     " + anioPelicula[i]);
+            }
+        }
+    }
+    public void mostrarAventura(){
+        System.out.println("Peliculas de aventura");
+        for (int i = 0; i < controlPelicula; i++) {
+            if (categoriaPelicula[i].equalsIgnoreCase("Aventura")) {
+                System.out.println(idPelicula[i] + "     " + nombrePelicula[i] + "     " + anioPelicula[i]);
+            }
+        }
+    }
+    public void mostrarotros(){
+        System.out.println("Peliculas de otras Categorias");
+        for (int i = 0; i < controlPelicula; i++) {
+            if (!categoriaPelicula[i].equalsIgnoreCase("Aventura")) {
+                if (!categoriaPelicula[i].equalsIgnoreCase("Romantica")) {
+                    if (categoriaPelicula[i].equalsIgnoreCase("Accion")) {
+                        if (categoriaPelicula[i].equalsIgnoreCase("Documental")) {
+                            if (categoriaPelicula[i].equalsIgnoreCase("Comedia")) {
+                                System.out.println(idPelicula[i] + "     " + nombrePelicula[i] + "     " + anioPelicula[i]);
+                            }
+                        }
+                    }
+                } 
+            }
+        }
+    }
+    public void menuCategorias(){
+        int opci;
+        System.out.println("Ingrese el numero que acompaña al tipo de categoria de peliculas que quiere ver");
+        System.out.println("1. Romantica");
+        System.out.println("2. Accion");
+        System.out.println("3. Comedia");
+        System.out.println("4. Aventura");
+        System.out.println("5. Documental");
+        System.out.println("6. Otros");
+        opci = Integer.parseInt(scan.nextLine());
+        if (opci == 1) {
+            mostrarRomanticas();
+        } else if (opci == 2) {
+            mostrarAccion();
+        } else if (opci == 3) {
+            mostrarComedio();
+        } else if (opci == 4) {
+            mostrarAventura();
+        } else if (opci == 5) {
+            mostrarDocumentales();
+        } else {
+            mostrarotros();
+        }
+    }
+    public void menuReportes(){
+        int elegir;
+        System.out.println("\n¿Que deseas ver");
+        System.out.println("Ingresa el numero de la opcion a realizar");
+        System.out.println("1. Ver peliculas por Categoria");
+        System.out.println("2. Ver peliculas de una categoria en especifico");
+        System.out.println("3. Ver cantidad de veces que se presto una pelicula");
+        System.out.println("4. Ver Pelicula mas Prestada");
+        System.out.println("5. Ver pelicula menos Prestada");
+        elegir = Integer.parseInt(scan.nextLine());
+        if (elegir == 1) {
+            mostrarRomanticas();
+            mostrarAventura();
+            mostrarAccion();
+            mostrarComedio();
+            mostrarDocumentales();
+            mostrarotros();
+        } else if (elegir == 2){
+            menuCategorias();
+        } else if (elegir == 3){
+            mostrarCantidadPrestadas();
+        } else if (elegir == 4){
+            buscarMasPrestada();
+        } else if (elegir == 5) {
+            buscarMenosPrestada();
+        } else {
+            System.out.println("No existe esa opcion");
+        }
+    }
+
+
 
 }
