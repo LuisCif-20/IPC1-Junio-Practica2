@@ -4,6 +4,34 @@ public class Principal{
     public static void main(String[] args) {
         
     }
+
+    public Principal(){
+        int opcion = 0;
+        do {
+            mostrarMenu();
+            opcion = Integer.parseInt(scan.nextLine());
+            if (opcion == 1) {
+                prestarPelicula();
+            } else if (opcion == 2) {
+                
+            } else if (opcion == 3) {
+                mostrarPeliculas();
+            } else if (opcion == 4) {
+                agregarPelicula();
+            } else if (opcion == 5) {
+                
+            } else if (opcion == 6) {
+                agregarCliente();
+            } else if (opcion == 7) {
+                mostrarClientes();
+            } else if (opcion == 8) {
+                
+            } else {
+                System.out.println("----------Hasta Pronto----------");
+            }
+            
+        } while (opcion < 9 & opcion >= 1);
+    }
     Scanner scan = new Scanner(System.in);
     int limite = 30;
     int posicionC;
@@ -213,6 +241,10 @@ public class Principal{
                 controlprestamo++;
             }
         }
+        
+    }
+
+    public void devolverPelicula(){
         
     }
 
