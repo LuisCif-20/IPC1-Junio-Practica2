@@ -284,7 +284,7 @@ public class Principal {
         System.out.println("\nLas peliculas prestadas son\n");
         System.out.println("IdCliente----------IdPelicula----------DiasPrestados");
         for (int i = 0; i < controlprestamo; i++) {
-            System.out.println(idPelicualasP[i] + "----------" + idPelicualasP[i] + "----------" + diasPrestados[i]);
+            System.out.println(idClientesP[i] + "----------" + idPelicualasP[i] + "----------" + diasPrestados[i]);
 
         }
     }
