@@ -1,11 +1,11 @@
 import java.util.*;
 
-public class Principal{
+public class Principal {
     public static void main(String[] args) {
-        
+
     }
 
-    public Principal(){
+    public Principal() {
         int opcion = 0;
         do {
             mostrarMenu();
@@ -13,25 +13,26 @@ public class Principal{
             if (opcion == 1) {
                 prestarPelicula();
             } else if (opcion == 2) {
-                
+                devolverPelicula();
             } else if (opcion == 3) {
                 mostrarPeliculas();
             } else if (opcion == 4) {
                 agregarPelicula();
             } else if (opcion == 5) {
-                
+                ordenarPeliculas();
             } else if (opcion == 6) {
                 agregarCliente();
             } else if (opcion == 7) {
                 mostrarClientes();
             } else if (opcion == 8) {
-                
+
             } else {
                 System.out.println("----------Hasta Pronto----------");
             }
-            
+
         } while (opcion < 9 & opcion >= 1);
     }
+
     Scanner scan = new Scanner(System.in);
     int limite = 30;
     int posicionC;
@@ -52,9 +53,8 @@ public class Principal{
     int[] diasPrestados = new int[limite];
     int[] idClientesP = new int[limite];
     int[] idPelicualasP = new int[limite];
-    
 
-    public void mostrarMenu(){
+    public void mostrarMenu() {
         System.out.println("\n¿Que deseas hacer");
         System.out.println("Ingresa el numero que acompaña a la accion que deseas realizar");
         System.out.println("1. Prestar Peliculas");
@@ -107,7 +107,7 @@ public class Principal{
         controlCLientes++;
     }
 
-    public void mostrarClientes(){
+    public void mostrarClientes() {
         System.out.println("\nSe han ingresado los siguientes Clientes");
         for (int i = 0; i < controlCLientes; i++) {
             System.out.print(idCliente[i] + "     ");
@@ -120,7 +120,6 @@ public class Principal{
             }
         }
     }
-
 
     public void agregarPelicula() {
         int idP;
@@ -165,23 +164,25 @@ public class Principal{
         System.out.println("\nPelicula Agregada\n");
         controlPelicula++;
     }
-    public void mostrarPeliculas(){
+
+    public void mostrarPeliculas() {
         System.out.println("\nSe han registrado las siguientes peliculas");
-            for (int i = 0; i < controlPelicula; i++) {
-                System.out.print(idPelicula[i] + "     ");
-                System.out.print(nombrePelicula[i] + "     ");
-                System.out.print(añoPelicula[i] + "     ");
-                System.out.print(categoriaPelicula[i] + "     ");
-                if (disponible[i]) {
-                    System.out.print("Disponible\n");
-                } else {
-                    System.out.print("No disponible\n");
-                }
+        for (int i = 0; i < controlPelicula; i++) {
+            System.out.print(idPelicula[i] + "     ");
+            System.out.print(nombrePelicula[i] + "     ");
+            System.out.print(añoPelicula[i] + "     ");
+            System.out.print(categoriaPelicula[i] + "     ");
+            if (disponible[i]) {
+                System.out.print("Disponible\n");
+            } else {
+                System.out.print("No disponible\n");
             }
+        }
     }
-    public int buscarIdClienteP(){
+
+    public int buscarIdClienteP() {
         int posicion = 30;
-        System.out.println("Ingrese el id del Cliente");
+        System.out.println("Ingrese el id del Cliente que va a prestar o que va a devolver");
         int id = Integer.parseInt(scan.nextLine());
         for (int i = 0; i < controlCLiente; i++) {
             if (id == idCliente[i]) {
@@ -192,9 +193,10 @@ public class Principal{
         }
         return posicion;
     }
-    public int buscarIdPeliculaP(){
+
+    public int buscarIdPeliculaP() {
         int posicion = 30;
-        System.out.println("Ingrese el id de la Pelicula");
+        System.out.println("Ingrese el id de la Pelicula a prestar o a devolver");
         int id = Integer.parseInt(scan.nextLine());
         for (int i = 0; i < controlPelicula; i++) {
             if (id == idClientesP[i]) {
@@ -206,7 +208,7 @@ public class Principal{
         return posicion;
     }
 
-    public boolean verPrestamo(int posicion){
+    public boolean verPrestamo(int posicion) {
         if (!peliculaPrestada[posicion]) {
             return true;
         } else {
@@ -214,7 +216,8 @@ public class Principal{
         }
         return false;
     }
-    public boolean verDisponibilidad(int posicion){
+
+    public boolean verDisponibilidad(int posicion) {
         if (disponible[posicion]) {
             return true;
         } else {
@@ -223,13 +226,23 @@ public class Principal{
         return false;
     }
 
+    public void mostrarPeliculasDisponible() {
+        System.out.println("\nLas peliculas disponibles son:\n");
+        for (int i = 0; i < controlPelicula; i++) {
+            if (disponible[i]) {
+                System.out.println(idPelicula[i] + "     " + nombrePelicula[i] + "     " + añoPelicula[i] + "     "
+                        + categoriaPelicula[i]);
+            }
+        }
+    }
 
-    public void prestarPelicula(){
+    public void prestarPelicula() {
         System.out.println("\nSi quiere prestar una Pelicula, tome en cuenta lo siguiente:");
         System.out.println("1. Que usted no tenga otra pelicula Prestada en este momento.");
         System.out.println("2. Que la pelicula este disponible, es decir que no haya sido prestada");
-        posicionC = buscarIdClienteP();
+        mostrarPeliculasDisponible();
         posicionP = buscarIdPeliculaP();
+        posicionC = buscarIdClienteP();
         if (posicionC != 30 & posicionP != 30) {
             if (verPrestamo(posicionC) & verDisponibilidad(posicionP)) {
                 System.out.println("Cuantos dias prestara la pelicula");
@@ -241,13 +254,62 @@ public class Principal{
                 controlprestamo++;
             }
         }
-        
+
     }
 
-    public void devolverPelicula(){
-        
+    public void mostrarPeliculasPrestasda() {
+        System.out.println("\nLas peliculas prestadas son\n");
+        System.out.println("IdCliente----------IdPelicula----------DiasPrestados");
+        for (int i = 0; i < controlprestamo; i++) {
+            System.out.println(idPelicualasP[i] + "----------" + idPelicualasP[i] + "----------" + diasPrestados[i]);
+
+        }
     }
 
+    public void devolverPelicula() {
+        mostrarPeliculasPrestasda();
+        posicionP = buscarIdPeliculaP();
+        posicionC = buscarIdClienteP();
+        if (posicionC != 30 & posicionP != 30) {
+            if (peliculaPrestada[posicionC] & !disponible[posicionP]) {
+                System.out.println("Listo Pelicula devuelta, cliente libre para realizar otro prestamo");
+                for (int i = 0; i < controlprestamo; i++) {
+                    diasPrestados[i] = diasPrestados[i+1]
+                    idClientesP[i] = idClientesP[i+1];
+                    idPelicualasP[i] = idPelicualasP[i+1];
+                }
+                peliculaPrestada[posicionC] = false;
+                disponible[posicionP] = true;
+                controlprestamo--;
+            }
+        }
+    }
 
+    public void ordenarPeliculas(){
+        for (int i = 1; i < controlPelicula; i++) {
+            for (int j = 0; j < controlPelicula -j; j++) {
+                String nombre = nombrePelicula[j];
+                String nombreSiguiente = nombrePelicula[j+1];
+                if (nombre.compareToIgnoreCase(nombreSiguiente) > 0) {
+                    nombrePelicula[j] = nombreSiguiente;
+                    nombrePelicula[j+1] = nombre;
+                    String aux = categoriaPelicula[j];
+                    categoriaPelicula[j] = categoriaPelicula[j+1];
+                    categoriaPelicula[j+1] = aux;
+                    int aux1 = idPelicula[j];
+                    idPelicula[j] = idPelicula[j+1];
+                    idPelicula[j+1] = aux1; 
+                    aux1 = añoPelicula[j];
+                    añoPelicula[j] = añoPelicula[j+1];
+                    añoPelicula[j+1] = aux1;
+                    booolean aux2 = disponible[j];
+                    disponible[j] = disponible[j+1];
+                    disponible[j+1] = aux2; 
+
+                }
+            }
+        }
+
+    }
 
 }
