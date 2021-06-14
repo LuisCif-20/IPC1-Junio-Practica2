@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Principal {
     public static void main(String[] args) {
-
+        Principal principal = new Principal();
     }
 
     public Principal() {
@@ -274,7 +274,7 @@ public class Principal {
             if (peliculaPrestada[posicionC] & !disponible[posicionP]) {
                 System.out.println("Listo Pelicula devuelta, cliente libre para realizar otro prestamo");
                 for (int i = 0; i < controlprestamo; i++) {
-                    diasPrestados[i] = diasPrestados[i+1]
+                    diasPrestados[i] = diasPrestados[i+1];
                     idClientesP[i] = idClientesP[i+1];
                     idPelicualasP[i] = idPelicualasP[i+1];
                 }
@@ -302,7 +302,7 @@ public class Principal {
                     aux1 = añoPelicula[j];
                     añoPelicula[j] = añoPelicula[j+1];
                     añoPelicula[j+1] = aux1;
-                    booolean aux2 = disponible[j];
+                    boolean aux2 = disponible[j];
                     disponible[j] = disponible[j+1];
                     disponible[j+1] = aux2; 
 
